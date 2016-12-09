@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "1017842457249",
-    "firebase_url": "https://vstack-sample.firebaseio.com",
-    "project_id": "vstack-sample",
-    "storage_bucket": "vstack-sample.appspot.com"
+    "project_number": "470712708652",
+    "firebase_url": "https://vstack-sample-5014b.firebaseio.com",
+    "project_id": "vstack-sample-5014b",
+    "storage_bucket": "vstack-sample-5014b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1017842457249:android:50aa1370929ce345",
+        "mobilesdk_app_id": "1:470712708652:android:50aa1370929ce345",
         "android_client_info": {
           "package_name": "com.vht.sample"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1017842457249-0h0mqpd09a09m3961ctvgi4jomh7rn6m.apps.googleusercontent.com",
+          "client_id": "470712708652-vjoem0v41fdh77ocon51pe3dj80banir.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDZPdntTybJcUfJse87WBfVmR2Gq0nWXIQ"
+          "current_key": "AIzaSyAgbPD36Sc_do5PPiguIYm8-5OQuGbJRlw"
         }
       ],
       "services": {

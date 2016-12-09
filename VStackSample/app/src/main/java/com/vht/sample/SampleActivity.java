@@ -32,6 +32,10 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
 
+        //
+        final TextView textViewToChange = (TextView) findViewById(R.id.txt_userid);
+        textViewToChange.setText("Your VStack User: " + Config.my_name);
+
         //init view
         spFriend = (Spinner) findViewById(R.id.sp_user);
         btnChat11 = (Button) findViewById(R.id.btn_chat);

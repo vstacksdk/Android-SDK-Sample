@@ -13,12 +13,12 @@
     <string name="no_connection">No connection</string>
 
     <array name="list_friend_name">
-        <item>User 1</item>
-        <item>User 2</item>
-        <item>User 3</item>
-        <item>User 4</item>
-        <item>User 5</item>
-        <item>User 6</item>
+        <item>VStack 1</item>
+        <item>VStack 2</item>
+        <item>VStack 3</item>
+        <item>VStack 4</item>
+        <item>VStack 5</item>
+        <item>VStack 6</item>
     </array>
 
 </resources>
