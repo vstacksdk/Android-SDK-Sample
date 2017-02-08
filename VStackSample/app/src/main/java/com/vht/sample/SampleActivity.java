@@ -2,8 +2,12 @@ package com.vht.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,7 +29,8 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
     private Spinner spFriend;
     private Button btnChat11, btnCall, btnChatHistory, btnChatGroup, btnVideoCall;
     private View vConnect;
-    private TextView tvConnect;
+    private EditText edtFriendId;
+    private TextView tvConnect, tvYourFriend;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,8 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
 
         //init view
         spFriend = (Spinner) findViewById(R.id.sp_user);
+        edtFriendId = (EditText) findViewById(R.id.edtFriendId);
+        tvYourFriend = (TextView) findViewById(R.id.tvYourFriend);
         btnChat11 = (Button) findViewById(R.id.btn_chat);
         btnCall = (Button) findViewById(R.id.btn_call);
         btnChatHistory = (Button) findViewById(R.id.btn_chat_history);
@@ -66,24 +73,68 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
         vConnect.setVisibility(View.VISIBLE);
         tvConnect.setText(R.string.connecting);
         VStackClient.getInstance().connect(Config.my_vstack_userid, Config.user_credentials, Config.my_name);
+        tvYourFriend.setText(Config.listFriendVStackUserId[0]);
+
+        spFriend.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                tvYourFriend.setText(Config.listFriendVStackUserId[position]);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        edtFriendId.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (edtFriendId.length() > 0) {
+                    spFriend.setEnabled(false);
+                    tvYourFriend.setText(edtFriendId.getText().toString());
+                } else {
+                    spFriend.setEnabled(true);
+                    int pos = spFriend.getSelectedItemPosition();
+                    tvYourFriend.setText(Config.listFriendVStackUserId[pos]);
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
+        int pos = spFriend.getSelectedItemPosition();
+        String friendId = edtFriendId.length() > 0 ? edtFriendId.getText().toString() : Config.listFriendVStackUserId[pos];
+        String friendName = edtFriendId.length() > 0 ? edtFriendId.getText().toString() : Config.listFriendName[pos];
         if (id == R.id.btn_chat) {
-            int pos = spFriend.getSelectedItemPosition();
-            VStackClient.getInstance().startChat(SampleActivity.this, Config.listFriendVStackUserId[pos], Config.listFriendName[pos], null);
+//            int pos = spFriend.getSelectedItemPosition();
+            VStackClient.getInstance().startChat(SampleActivity.this, friendId, friendName, null);
         } else if (id == R.id.btn_call) {
-            int pos = spFriend.getSelectedItemPosition();
-            VStackClient.getInstance().startCall(SampleActivity.this, Config.listFriendVStackUserId[pos], Config.listFriendName[pos], null);
+//            int pos = spFriend.getSelectedItemPosition();
+            VStackClient.getInstance().startCall(SampleActivity.this, friendId, friendName, null);
         } else if (id == R.id.btn_chat_history) {
             VStackClient.getInstance().viewChatHistory(SampleActivity.this);
         } else if (id == R.id.btn_create_group) {
             VStackClient.getInstance().createGroup(SampleActivity.this);
         } else if (id == R.id.btn_video_call) {
-            int pos = spFriend.getSelectedItemPosition();
-            VStackClient.getInstance().startVideoCall(SampleActivity.this, Config.listFriendVStackUserId[pos], Config.listFriendName[pos], null);
+//            int pos = spFriend.getSelectedItemPosition();
+            VStackClient.getInstance().startVideoCall(SampleActivity.this, friendId, friendName, null);
         }
     }
 

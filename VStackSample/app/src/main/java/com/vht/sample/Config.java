@@ -9,8 +9,8 @@ public class Config {
             "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApxDkgYRgUr24soveQzHXE9GqQLi8Kv0KJtd35glW8UHry6Vy7o2fCGMNDTewKLrQmFLvAoMavIT+ZWKGG0yaARJQ93GduKmQ1C9UAgc3hLlHfW/YabwgENCkUdKtrnLZdx603wxxCfrmehP7LsqEp8BaHQJeTy4FLdCofTqNb8sR836Vk5CWoc11RoYsFJqV6htmxTgpxaHG3jJZOj15ran2rDSN7/yQc+nl8YIEeqmppYWupAe1/N3MkXwmTUPqgQUkXwPbYbuvHtLKLtOaHqSjQ88Vppjg0igZO6gTjL0vY8eumtePb61Ylv8JXzZ6Y+CXoE6x8/15rjG8jCMFvwIDAQAB";
     public static final String user_credentials = "";
 
-    public static final String my_vstack_userid = "vstack1";
-    public static final String my_name = "VStack 1";
+    public static String my_vstack_userid = "vstack1";
+    public static String my_name = "VStack 1";
     public static final String SENDER_ID = "470712708652";
 
     public static String[] listFriendName = {"VStack 1", "VStack 2", "VStack 3", "VStack 4", "VStack 5",
