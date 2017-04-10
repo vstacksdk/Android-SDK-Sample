@@ -64,6 +64,11 @@
             <!--</intent-filter>-->
         </activity>
 
+        <activity
+            android:name=".ChatGroupFragmentActivity"
+            android:label="@string/app_name"
+            android:theme="@style/VStackTheme.Light" />
+
         <!-- VStack activities -->
 
         <activity
@@ -157,7 +162,10 @@
             android:name="com.vht.activity.StickerListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/VStackTheme.Light" />
-
+        <activity
+            android:name="com.vht.activity.SelectContactChatGroupFragmentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/VStackTheme.Light" />
         <!-- VStack activities -->
 
         <meta-data

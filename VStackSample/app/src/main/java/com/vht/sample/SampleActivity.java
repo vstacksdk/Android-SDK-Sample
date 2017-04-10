@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,14 +13,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.vht.VStackClient;
+import com.vht.VStackContact;
 import com.vht.VStackOptions;
 import com.vht.exception.VStackException;
 import com.vht.listener.VStackConnectListener;
+import com.vht.listener.VStackMakeChatGroupListener;
 import com.vht.listener.VStackUserListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +32,7 @@ import java.util.List;
 public class SampleActivity extends AppCompatActivity implements View.OnClickListener {
     private Spinner spFriend;
     private Button btnChat11, btnCall, btnChatHistory, btnChatGroup, btnVideoCall;
+    private Button btnCreateGroupFragment, btnChatGroupFragment;
     private View vConnect;
     private EditText edtFriendId;
     private TextView tvConnect, tvYourFriend;
@@ -50,6 +55,8 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
         btnChatHistory = (Button) findViewById(R.id.btn_chat_history);
         btnChatGroup = (Button) findViewById(R.id.btn_create_group);
         btnVideoCall = (Button) findViewById(R.id.btn_video_call);
+        btnCreateGroupFragment = (Button) findViewById(R.id.btn_create_group_fragment);
+        btnChatGroupFragment = (Button) findViewById(R.id.btn_start_chat_group_fragment);
 
         vConnect = findViewById(R.id.v_connect);
         tvConnect = (TextView) findViewById(R.id.tv_no_connection);
@@ -60,6 +67,8 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
         btnChatHistory.setOnClickListener(this);
         btnChatGroup.setOnClickListener(this);
         btnVideoCall.setOnClickListener(this);
+        btnCreateGroupFragment.setOnClickListener(this);
+        btnChatGroupFragment.setOnClickListener(this);
 
         //init vstack
         initVStack();
@@ -135,6 +144,10 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
         } else if (id == R.id.btn_video_call) {
 //            int pos = spFriend.getSelectedItemPosition();
             VStackClient.getInstance().startVideoCall(SampleActivity.this, friendId, friendName, null);
+        }else if(id == R.id.btn_create_group_fragment){
+            VStackClient.getInstance().createPublicGroup(SampleActivity.this, "name_group", new ArrayList<Integer>());
+        }else if(id == R.id.btn_start_chat_group_fragment){
+            VStackClient.getInstance().startWithChatPublicFragment(SampleActivity.this, Config.groupId, ChatGroupFragmentActivity.class);
         }
     }
 
@@ -163,6 +176,8 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
                                 btnChatHistory.setEnabled(true);
                                 btnChatGroup.setEnabled(true);
                                 btnVideoCall.setEnabled(true);
+                                btnChatGroupFragment.setEnabled(true);
+                                btnCreateGroupFragment.setEnabled(true);
                             }
                         }, 800);
                     }
@@ -215,6 +230,14 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
                     e.printStackTrace();
                 }
                 return arrayContact;
+            }
+        });
+
+        VStackClient.getInstance().setVStackMakeChatGroupListener(new VStackMakeChatGroupListener() {
+            @Override
+            public void onMakeChatGroupComplete(int r, int groupId, String groupName, List<VStackContact> list) {
+                Log.e("groupId", groupId+"");
+                Config.groupId = groupId;
             }
         });
     }
