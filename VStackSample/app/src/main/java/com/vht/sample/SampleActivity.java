@@ -136,14 +136,14 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
             VStackClient.getInstance().startChat(SampleActivity.this, friendId, friendName, null);
         } else if (id == R.id.btn_call) {
 //            int pos = spFriend.getSelectedItemPosition();
-            VStackClient.getInstance().startCall(SampleActivity.this, friendId, friendName, null);
+            VStackClient.getInstance().startCall(SampleActivity.this, friendId, friendName, null, 0);
         } else if (id == R.id.btn_chat_history) {
             VStackClient.getInstance().viewChatHistory(SampleActivity.this);
         } else if (id == R.id.btn_create_group) {
             VStackClient.getInstance().createGroup(SampleActivity.this);
         } else if (id == R.id.btn_video_call) {
 //            int pos = spFriend.getSelectedItemPosition();
-            VStackClient.getInstance().startVideoCall(SampleActivity.this, friendId, friendName, null);
+            VStackClient.getInstance().startVideoCall(SampleActivity.this, friendId, friendName, null, 0);
         }else if(id == R.id.btn_create_group_fragment){
             VStackClient.getInstance().createPublicGroup(SampleActivity.this, "name_group", new ArrayList<Integer>());
         }else if(id == R.id.btn_start_chat_group_fragment){
