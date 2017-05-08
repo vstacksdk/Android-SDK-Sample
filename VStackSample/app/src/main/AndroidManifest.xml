@@ -166,6 +166,11 @@
             android:name="com.vht.activity.SelectContactChatGroupFragmentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/VStackTheme.Light" />
+        <activity
+            android:name="com.vht.activity.CallOutSentActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/VStackTheme.Light" />
         <!-- VStack activities -->
 
         <meta-data

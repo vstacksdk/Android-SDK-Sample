@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vht.VStackClient;
 import com.vht.VStackContact;
@@ -32,15 +33,16 @@ import java.util.List;
 public class SampleActivity extends AppCompatActivity implements View.OnClickListener {
     private Spinner spFriend;
     private Button btnChat11, btnCall, btnChatHistory, btnChatGroup, btnVideoCall;
-    private Button btnCreateGroupFragment, btnChatGroupFragment;
+    private Button btnCreateGroupFragment, btnChatGroupFragment, btnCallOut;
     private View vConnect;
-    private EditText edtFriendId;
+    private EditText edtFriendId, edtPhoneNumber;
     private TextView tvConnect, tvYourFriend;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
+
 
         //
         final TextView textViewToChange = (TextView) findViewById(R.id.txt_userid);
@@ -49,6 +51,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
         //init view
         spFriend = (Spinner) findViewById(R.id.sp_user);
         edtFriendId = (EditText) findViewById(R.id.edtFriendId);
+        edtPhoneNumber = (EditText) findViewById(R.id.edtPhone);
         tvYourFriend = (TextView) findViewById(R.id.tvYourFriend);
         btnChat11 = (Button) findViewById(R.id.btn_chat);
         btnCall = (Button) findViewById(R.id.btn_call);
@@ -57,6 +60,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
         btnVideoCall = (Button) findViewById(R.id.btn_video_call);
         btnCreateGroupFragment = (Button) findViewById(R.id.btn_create_group_fragment);
         btnChatGroupFragment = (Button) findViewById(R.id.btn_start_chat_group_fragment);
+        btnCallOut = (Button) findViewById(R.id.btn_callout);
 
         vConnect = findViewById(R.id.v_connect);
         tvConnect = (TextView) findViewById(R.id.tv_no_connection);
@@ -69,6 +73,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
         btnVideoCall.setOnClickListener(this);
         btnCreateGroupFragment.setOnClickListener(this);
         btnChatGroupFragment.setOnClickListener(this);
+        btnCallOut.setOnClickListener(this);
 
         //init vstack
         initVStack();
@@ -144,10 +149,13 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
         } else if (id == R.id.btn_video_call) {
 //            int pos = spFriend.getSelectedItemPosition();
             VStackClient.getInstance().startVideoCall(SampleActivity.this, friendId, friendName, null, 0);
-        }else if(id == R.id.btn_create_group_fragment){
+        } else if (id == R.id.btn_create_group_fragment) {
             VStackClient.getInstance().createPublicGroup(SampleActivity.this, "name_group", new ArrayList<Integer>());
-        }else if(id == R.id.btn_start_chat_group_fragment){
+        } else if (id == R.id.btn_start_chat_group_fragment) {
             VStackClient.getInstance().startWithChatPublicFragment(SampleActivity.this, Config.groupId, ChatGroupFragmentActivity.class);
+        } else if (id == R.id.btn_callout) {
+            if (edtPhoneNumber.getText().toString().length() > 5)
+                VStackClient.getInstance().startCallOut(SampleActivity.this, friendId, friendName, null, edtPhoneNumber.getText().toString());
         }
     }
 
@@ -178,6 +186,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
                                 btnVideoCall.setEnabled(true);
                                 btnChatGroupFragment.setEnabled(true);
                                 btnCreateGroupFragment.setEnabled(true);
+                                btnCallOut.setEnabled(true);
                             }
                         }, 800);
                     }
@@ -235,8 +244,13 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
 
         VStackClient.getInstance().setVStackMakeChatGroupListener(new VStackMakeChatGroupListener() {
             @Override
-            public void onMakeChatGroupComplete(int r, int groupId, String groupName, List<VStackContact> list) {
-                Log.e("groupId", groupId+"");
+            public void onMakeChatGroupComplete(int r, int groupId, String groupName, List<VStackContact> list, String tag) {
+                Log.e("groupId", groupId + "");
+                if (r == 1 && groupId > 0) {
+                    Toast.makeText(SampleActivity.this, "Create public group chat successfully", Toast.LENGTH_SHORT).show();
+                } else if (r == 2 && groupId > 0) {
+                    Toast.makeText(SampleActivity.this, "Group already exists", Toast.LENGTH_SHORT).show();
+                }
                 Config.groupId = groupId;
             }
         });
